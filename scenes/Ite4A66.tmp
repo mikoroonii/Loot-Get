@@ -1,0 +1,222 @@
+[gd_scene load_steps=11 format=3 uid="uid://d20so45lk81cv"]
+
+[ext_resource type="Script" path="res://scripts/Item.gd" id="1_6bdad"]
+[ext_resource type="Texture2D" uid="uid://ciaw07r53gbjq" path="res://Assets/Sprites/ItemBGFLAT.png" id="2_70jyu"]
+[ext_resource type="Texture2D" uid="uid://dt7afuug6fe61" path="res://Assets/Sprites/icon.png" id="3_5g8km"]
+
+[sub_resource type="Animation" id="Animation_ftfle"]
+resource_name = "slideIn"
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.5, 0.5, 0.5), Vector3(0.7, 0.7, 0.7)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-13, 0, 0), Vector3(-8, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_lojpp"]
+resource_name = "popUp"
+length = 0.1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(-8, 0, 0), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.7, 0.7, 0.7), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_gg08s"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-13, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.5, 0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_s3wfi"]
+resource_name = "slideOut1"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(8, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0.7, 0.7, 0.7)]
+}
+
+[sub_resource type="Animation" id="Animation_4s02p"]
+resource_name = "slideOut2"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(8, 0, 0), Vector3(13, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.7, 0.7, 0.7), Vector3(0.5, 0.5, 0.5)]
+}
+
+[sub_resource type="Animation" id="Animation_8tipj"]
+resource_name = "reset"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(-13, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.5, 0.5, 0.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nf04p"]
+_data = {
+"RESET": SubResource("Animation_gg08s"),
+"popUp": SubResource("Animation_lojpp"),
+"reset": SubResource("Animation_8tipj"),
+"slideIn": SubResource("Animation_ftfle"),
+"slideOut1": SubResource("Animation_s3wfi"),
+"slideOut2": SubResource("Animation_4s02p")
+}
+
+[node name="Item" type="MeshInstance3D"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, -13, 0, 0)
+transparency = 0.17
+script = ExtResource("1_6bdad")
+
+[node name="BGSprite" type="Sprite3D" parent="."]
+transform = Transform3D(1.24767, 0, 0, 0, 1.24767, 0, 0, 0, 1.24767, 0, 0, -0.25)
+modulate = Color(0.494118, 0.611765, 0, 1)
+texture = ExtResource("2_70jyu")
+region_rect = Rect2(-1.72443, 0.164021, 722.728, 339.567)
+
+[node name="Icon" type="Sprite3D" parent="."]
+transform = Transform3D(1.77444, 0, 0, 0, 1.77444, 0, 0, 0, 2, 0, 0, 0)
+texture = ExtResource("3_5g8km")
+
+[node name="NameLabel" type="Label3D" parent="Icon"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, 0.848843, 0)
+text = "Item Name"
+font_size = 156
+
+[node name="Description" type="Label3D" parent="Icon"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.657555, 0)
+text = "Just a blank description right now. Testing Testing! woohoo"
+font_size = 47
+vertical_alignment = 0
+autowrap_mode = 2
+width = 1000.0
+
+[node name="Value" type="Label3D" parent="Icon"]
+transform = Transform3D(0.25, 0, 0, 0, 0.25, 0, 0, 0, 0.25, 0, 1.06792, 0)
+text = "Item Name"
+font_size = 156
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_nf04p")
+}

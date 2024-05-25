@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemResource" load_steps=2 format=3 uid="uid://ccwxuvd6nuodf"]
+
+[ext_resource type="Script" path="res://ResourceDefinitions/ItemResource.gd" id="1_unn25"]
+
+[resource]
+script = ExtResource("1_unn25")
+objpath = "res://Assets/Sprites/icon.png"
+mtlpath = "res://ItemResources/Skull.obj"
+iconpath = "res://ItemResources/icon.png"
+jsonpath = "res://ItemResources/Skull.json"
+name = "Skull"

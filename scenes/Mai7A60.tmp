@@ -1,0 +1,443 @@
+[gd_scene load_steps=23 format=3 uid="uid://c1tf16osb2gm1"]
+
+[ext_resource type="Script" path="res://scripts/MainScene.gd" id="1_xldrm"]
+[ext_resource type="PackedScene" uid="uid://galpa5d6fdul" path="res://ui/UI.tscn" id="2_3prgm"]
+[ext_resource type="Texture2D" uid="uid://bhmio7pia7jny" path="res://Assets/Sprites/mask.png" id="2_5a0bj"]
+[ext_resource type="PackedScene" uid="uid://vokwuaxdn2po" path="res://scenes/Carousel.tscn" id="2_l6qko"]
+[ext_resource type="Texture2D" uid="uid://cd47clugrbktt" path="res://Assets/Models, Textures/dankroom.jpg" id="4_cq4w6"]
+[ext_resource type="ArrayMesh" uid="uid://lf51nsr7ncs7" path="res://Assets/Models, Textures/dankroom.obj" id="5_l7knm"]
+[ext_resource type="PackedScene" uid="uid://t5jrqk28gitp" path="res://Assets/Rigged Models/crate.glb" id="7_sru7i"]
+[ext_resource type="AudioStream" uid="uid://ufnyy4onegn4" path="res://Assets/sfx/crateopen.wav" id="8_wlefh"]
+[ext_resource type="Script" path="res://scripts/twitchIntegrate.gd" id="9_3ua5a"]
+
+[sub_resource type="Shader" id="Shader_nyrkq"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable.mono's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_sub,depth_draw_opaque,cull_back,diffuse_burley,specular_schlick_ggx;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float alpha_scissor_threshold;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	ALPHA *= albedo.a * albedo_tex.a;
+	ALPHA_SCISSOR_THRESHOLD = alpha_scissor_threshold;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rshbu"]
+render_priority = 0
+shader = SubResource("Shader_nyrkq")
+shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/alpha_scissor_threshold = 0.0
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("2_5a0bj")
+
+[sub_resource type="BoxMesh" id="BoxMesh_y5hne"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sekuf"]
+albedo_texture = ExtResource("4_cq4w6")
+
+[sub_resource type="Animation" id="Animation_ntpoh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 7.51494)]
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-4.47175, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("MeshInstance3D:position:z")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(-20.0936, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("MeshInstance3D:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera3D:position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/6/type = "bezier"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Camera3D:position:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/7/type = "bezier"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Camera3D:position:z")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(7.51494, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_nwrvt"]
+resource_name = "reveal"
+length = 1.5
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.4, 1.4)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-4.486, -0.25, 0, 0.25, 0, 1.2926, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.4, 1.4)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(-18, -0.25, 0, 0.25, 0, -20.3376, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.4, 1.4)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Camera3D:position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.4, 1.4)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Camera3D:position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0, 1.87265, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.4, 1.4)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Camera3D:position:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0, 0),
+"points": PackedFloat32Array(7.51494, -0.25, 0, 0.25, 0, -8.92895, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0.4, 1.4)
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("MeshInstance3D:scale")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0.4, 1.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_dlo6b"]
+_data = {
+"RESET": SubResource("Animation_ntpoh"),
+"reveal": SubResource("Animation_nwrvt")
+}
+
+[sub_resource type="Animation" id="Animation_v05ue"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.174533, 0, -0.174533)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, -50, -25)]
+}
+
+[sub_resource type="Animation" id="Animation_3mdyh"]
+resource_name = "spin"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.174533, 0, -0.174533), Vector3(0.174533, 6.28319, -0.174533)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1qb3e"]
+_data = {
+"RESET": SubResource("Animation_v05ue"),
+"spin": SubResource("Animation_3mdyh")
+}
+
+[sub_resource type="Animation" id="Animation_fv8y0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Sprite3D:material_override:shader_parameter/alpha_scissor_threshold")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_prgt4"]
+resource_name = "irisOpen"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Sprite3D:material_override:shader_parameter/alpha_scissor_threshold")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 0.277392),
+"update": 0,
+"values": [0.0, 0.99]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_v6do4"]
+_data = {
+"RESET": SubResource("Animation_fv8y0"),
+"irisOpen": SubResource("Animation_prgt4")
+}
+
+[node name="MainScene" type="Node3D"]
+script = ExtResource("1_xldrm")
+
+[node name="Ui" parent="." instance=ExtResource("2_3prgm")]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 7.51494)
+size = 15.0
+
+[node name="Sprite3D" type="Sprite3D" parent="Camera3D"]
+transform = Transform3D(0.031, 0, 0, 0, 0.031, 0, 0, 0, 0.031, 0, 0, -0.794669)
+material_override = SubResource("ShaderMaterial_rshbu")
+modulate = Color(0, 0, 0, 1)
+transparent = false
+alpha_cut = 1
+alpha_scissor_threshold = 0.163
+alpha_antialiasing_edge = 0.1
+texture_filter = 5
+texture = ExtResource("2_5a0bj")
+
+[node name="Carousel" parent="." instance=ExtResource("2_l6qko")]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -50, -25)
+mesh = SubResource("BoxMesh_y5hne")
+skeleton = NodePath("")
+
+[node name="Environment" type="Node" parent="."]
+
+[node name="Dankroom" type="MeshInstance3D" parent="Environment"]
+transform = Transform3D(-3.01992e-07, 3.49691e-07, -4, -6.03983e-07, -4, -3.49691e-07, -4, 6.03983e-07, 3.01992e-07, 0, -5.71732, -20.0908)
+material_override = SubResource("StandardMaterial3D_sekuf")
+mesh = ExtResource("5_l7knm")
+skeleton = NodePath("../..")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, -0.0772839, 17.6449, -21.178)
+light_energy = 9.902
+shadow_enabled = true
+spot_range = 26.3997
+spot_angle = 22.2319
+
+[node name="SpotLight3D2" type="SpotLight3D" parent="Environment"]
+transform = Transform3D(1, -3.63153e-08, 1.88933e-08, 3.64911e-08, 0.999956, -0.00939015, -1.85515e-08, 0.00939015, 0.999956, 0, 0, 4.351)
+light_energy = 5.0
+light_size = 1.0
+shadow_enabled = true
+spot_range = 19.0454
+spot_angle = 26.1992
+
+[node name="Animators" type="Node" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Animators"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_dlo6b")
+}
+
+[node name="MeshSpinner" type="AnimationPlayer" parent="Animators"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_1qb3e")
+}
+
+[node name="CameraIrisAnimate" type="AnimationPlayer" parent="Animators"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_v6do4")
+}
+
+[node name="Timers" type="Node" parent="."]
+
+[node name="ResetTimer" type="Timer" parent="Timers"]
+wait_time = 8.0
+one_shot = true
+
+[node name="SceneReloadTimer" type="Timer" parent="Timers"]
+wait_time = 3.0
+one_shot = true
+
+[node name="crate" parent="." instance=ExtResource("7_sru7i")]
+transform = Transform3D(10, 0, 0, 0, 10, 0, 0, 0, 10, 0, -5.80228, -19.4513)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="crate"]
+stream = ExtResource("8_wlefh")
+
+[node name="twitchIntegrator" type="Node" parent="."]
+script = ExtResource("9_3ua5a")
+client_id = null
+channel = null
+username = null
+cooldown = 5
+
+[connection signal="reveal" from="Carousel" to="." method="_on_carousel_reveal"]
+[connection signal="timeout" from="Timers/ResetTimer" to="." method="_on_reset_timer_timeout"]
+[connection signal="timeout" from="Timers/SceneReloadTimer" to="." method="_on_reset_timer_timeout"]
+[connection signal="timeout" from="Timers/SceneReloadTimer" to="." method="_on_scene_reload_timer_timeout"]

@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1tf16osb2gm1"]
+
+[ext_resource type="Script" path="res://scenes/MainScene.gd" id="1_xldrm"]
+[ext_resource type="PackedScene" uid="uid://d20so45lk81cv" path="res://scenes/Item.tscn" id="2_a0gep"]
+
+[node name="MainScene" type="Node3D"]
+script = ExtResource("1_xldrm")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 33.3357)
+projection = 1
+size = 10.0
+
+[node name="Item" parent="." instance=ExtResource("2_a0gep")]
