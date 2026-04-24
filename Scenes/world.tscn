@@ -1,0 +1,211 @@
+[gd_scene format=3 uid="uid://olmourjkb3pw"]
+
+[ext_resource type="Script" uid="uid://b5gn4cy6sjajr" path="res://Scenes/world.gd" id="1_5a7ea"]
+[ext_resource type="PackedScene" uid="uid://c5ie4dekjpmni" path="res://Scenes/carousel_spinner.tscn" id="2_8j60k"]
+[ext_resource type="PackedScene" uid="uid://bwbbgqtrem5an" path="res://Scenes/case_revealer.tscn" id="3_fo5ed"]
+
+[sub_resource type="Environment" id="Environment_5a7ea"]
+background_mode = 1
+volumetric_fog_enabled = true
+
+[sub_resource type="Animation" id="Animation_kldst"]
+length = 0.001
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("World/Camera3D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("World/Camera3D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0.08211964, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("World/Camera3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("World/Camera3D:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("World/Camera3D:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("World/Camera3D:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(0),
+"points": PackedFloat32Array(0, -0.25, 0, 0.25, 0),
+"times": PackedFloat32Array(0)
+}
+
+[sub_resource type="Animation" id="Animation_b2bpf"]
+resource_name = "camera_push"
+length = 2.0
+tracks/0/type = "bezier"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("World/Camera3D:position:x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.15555556, 0, 0, -0.15555558, 0, 0.12777779, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.9333334, 1.7)
+}
+tracks/1/type = "bezier"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("World/Camera3D:position:y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(0.08211964, 0, 0, 0.15555556, 0, 0.08616377, -0.15555558, 0.010894745, 0.12777779, -0.008949254, -0.03694433, -0.9666667, -0.0013010167, 0, 0),
+"times": PackedFloat32Array(0, 0.5, 1.7)
+}
+tracks/2/type = "bezier"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("World/Camera3D:position:z")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.15555556, 0, 0.07965872, -0.15555558, 0.1845804, 0.12777779, -0.15161961, -2.0172, -1.1333334, 0.10270846, 0, 0),
+"times": PackedFloat32Array(0, 0.53333336, 1.7)
+}
+tracks/3/type = "bezier"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("World/Camera3D:rotation:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.15555556, 0, -0.010598874, -0.15555558, -0.009174959, 0.12777779, 0.0075365724, 0.10026918, -1.1, 0.0005309507, 0, 0),
+"times": PackedFloat32Array(0, 0.53333336, 1.7)
+}
+tracks/4/type = "bezier"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("World/Camera3D:rotation:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.15555556, 0, 0, -0.15555558, 0, 0.12777779, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.9333334, 1.7)
+}
+tracks/5/type = "bezier"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("World/Camera3D:rotation:z")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"handle_modes": PackedInt32Array(2, 2, 0),
+"points": PackedFloat32Array(0, 0, 0, 0.15555556, 0, 0, -0.15555558, 0, 0.12777779, 0, 0, -0.083333336, 0, 0, 0),
+"times": PackedFloat32Array(0, 0.9333334, 1.7)
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7lihs"]
+_data = {
+&"RESET": SubResource("Animation_kldst"),
+&"camera_push": SubResource("Animation_b2bpf")
+}
+
+[node name="World" type="Node3D" unique_id=381886228]
+script = ExtResource("1_5a7ea")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=394794557]
+transform = Transform3D(-0.8660254, -0.43301278, 0.24999999, 0.4888679, -0.62838155, 0.6050991, -0.10492024, 0.6462481, 0.75588036, 0, 0, 0)
+shadow_enabled = true
+sky_mode = 2
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=88692731]
+environment = SubResource("Environment_5a7ea")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1567570711]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08211964, 0)
+fov = 90.0
+
+[node name="CarouselSpinner" parent="." unique_id=558214486 instance=ExtResource("2_8j60k")]
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -4.7683716e-07, -0.458153, -1.2259638)
+card_spacing = 0.7
+pop_height = 0.15
+pop_z_offset = 0.5
+drag = 0.8
+min_launch_speed = 25.0
+max_launch_speed = 35.0
+flapper_engage_speed = 8.0
+flapper_impulse = 0.5
+settle_speed = 0.4
+spring_k = 14.0
+spring_damping = 7.0
+rest_threshold = 0.01
+
+[node name="Revealer" parent="." unique_id=2086138151 instance=ExtResource("3_fo5ed")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.7681165, -3.4079745)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1291968558]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_7lihs")
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=705713275]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.9261551, -1.270989, -3.8323975)
+size = Vector3(14.065414, 1, 14.556885)
+
+[node name="SpotLight3D" type="SpotLight3D" parent="." unique_id=1993818258]
+transform = Transform3D(1, 0, 0, 0, -4.371139e-08, 1, 0, -1, -4.371139e-08, -2.3841858e-07, 1.9555044, -3.2625153)
+light_energy = 3.455
+light_indirect_energy = 2.93
+light_volumetric_fog_energy = 4.553
+light_size = 0.316
+shadow_enabled = true
+shadow_transmittance_bias = -1.391
+shadow_blur = 0.145
+spot_angle = 27.6
+spot_angle_attenuation = 18.37913
+
+[connection signal="card_revealed" from="CarouselSpinner" to="AnimationPlayer" method="play" unbinds=1 binds= ["camera_push"]]
+[connection signal="spin_finished" from="CarouselSpinner" to="Revealer" method="reveal"]
+[connection signal="revealed" from="Revealer" to="." method="_on_revealer_revealed"]

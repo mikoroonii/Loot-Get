@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://dqtddcioocddl"]
+
+[ext_resource type="Script" uid="uid://cbck0705o7urt" path="res://Scenes/carousel_item_3d.gd" id="1_s4i5v"]
+[ext_resource type="PackedScene" uid="uid://do44mh0koxr4v" path="res://Scenes/carousel_item.tscn" id="1_xkyd7"]
+[ext_resource type="Material" uid="uid://dv6s7xcbvmi76" path="res://Assets/materials/holo.material" id="2_fmj1k"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_xkyd7"]
+size = Vector2(0.5, 0.75)
+
+[node name="CarouselItem3d" type="Node3D" unique_id=1001324741]
+script = ExtResource("1_s4i5v")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=622654747]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.38, 0)
+material_overlay = ExtResource("2_fmj1k")
+mesh = SubResource("QuadMesh_xkyd7")
+skeleton = NodePath("../SubViewport")
+
+[node name="SubViewport" type="SubViewport" parent="." unique_id=2124631587]
+disable_3d = true
+transparent_bg = true
+canvas_item_default_texture_repeat = 2
+size = Vector2i(1024, 1536)
+
+[node name="CarouselItem" parent="SubViewport" unique_id=1572318625 instance=ExtResource("1_xkyd7")]
+
+[connection signal="ready" from="SubViewport" to="." method="_on_sub_viewport_ready"]

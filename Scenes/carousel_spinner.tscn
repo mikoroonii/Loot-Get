@@ -1,0 +1,234 @@
+[gd_scene format=3 uid="uid://c5ie4dekjpmni"]
+
+[ext_resource type="AudioStream" uid="uid://br5t5jmjwer17" path="res://Assets/sfx/blip.wav" id="1_18lje"]
+
+[sub_resource type="GDScript" id="GDScript_omqsd"]
+script/source = "@tool
+extends Node3D
+
+signal spin_started
+signal item_passed(item: CollectibleItem)
+signal spin_finished(winner: CollectibleItem)
+signal card_revealed(winner: CollectibleItem)
+
+const ITEM_SCENE: PackedScene = preload(\"res://Scenes/carousel_item_3d.tscn\")
+
+@export_group(\"Layout\")
+@export var card_spacing: float = 1.5
+@export var pop_height: float = 0.8
+@export var pop_z_offset: float = 0.6
+@export var pool_size: int = 9
+
+@export_group(\"Physics\")
+## Fraction of velocity KEPT per second. 0.98 = slow coast, 0.7 = fast stop.
+@export var drag: float = 0.92
+@export var min_launch_speed: float = 40.0
+@export var max_launch_speed: float = 60.0
+
+@export_group(\"Flapper\")
+@export var flapper_engage_speed: float = 10.0
+@export var flapper_impulse: float = 0.8
+
+@export_group(\"Settle\")
+@export var settle_speed: float = 0.8
+@export var spring_k: float = 22.0
+@export var spring_damping: float = 9.0
+@export var rest_threshold: float = 0.004
+
+var current_scroll: float = 0.0
+var velocity: float = 0.0
+var spinning: bool = false
+var settling: bool = false
+var settle_target: float = 0.0
+
+# Sparse map of virtual index → item. Grows as cards scroll into view.
+var item_sequence: Dictionary = {}
+
+var spawned_cards: Array[carousel_item_3d] = []
+var last_passed_idx: int = -1
+var last_flap_boundary: int = -1
+
+# ─── Public ───────────────────────────────────────────────────────────────────
+
+func spin() -> void:
+	setup_carousel()
+	start_spin()
+
+# ─── Setup ────────────────────────────────────────────────────────────────────
+
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		_setup_editor_preview()
+
+func _setup_editor_preview() -> void:
+	for child: Node in get_children():
+		if child.has_meta(\"is_carousel_preview\"):
+			child.queue_free()
+	spawned_cards.clear()
+	item_sequence.clear()
+	for _i: int in pool_size:
+		var card: carousel_item_3d = ITEM_SCENE.instantiate()
+		card.set_meta(\"v_idx\", -1)
+		card.set_meta(\"is_carousel_preview\", true)
+		add_child(card)
+		spawned_cards.append(card)
+
+func setup_carousel() -> void:
+	for card: carousel_item_3d in spawned_cards:
+		card.queue_free()
+	spawned_cards.clear()
+	item_sequence.clear()
+	for _i: int in pool_size:
+		var card: carousel_item_3d = ITEM_SCENE.instantiate()
+		card.set_meta(\"v_idx\", -1)
+		add_child(card)
+		spawned_cards.append(card)
+
+# ─── Spin ─────────────────────────────────────────────────────────────────────
+
+func start_spin() -> void:
+	current_scroll = 0.0
+	last_passed_idx = -1
+	last_flap_boundary = -1
+	settling = false
+	spinning = true
+	velocity = randf_range(min_launch_speed, max_launch_speed)
+	spin_started.emit()
+
+# ─── Physics ──────────────────────────────────────────────────────────────────
+
+func _process(delta: float) -> void:
+	_update_cards()
+	if not spinning:
+		return
+	if settling:
+		_process_settle(delta)
+	else:
+		_process_free_spin(delta)
+
+func _process_free_spin(delta: float) -> void:
+	velocity *= pow(drag, delta)
+
+	var flap_idx: int = floori(current_scroll / card_spacing)
+	if flap_idx != last_flap_boundary:
+		last_flap_boundary = flap_idx
+		_on_flap_tick()
+		if velocity < flapper_engage_speed:
+			var grip: float = 1.0 - (velocity / flapper_engage_speed)
+			velocity = maxf(0.0, velocity - flapper_impulse * grip)
+
+	current_scroll += velocity * delta
+
+	if velocity <= settle_speed:
+		settling = true
+		settle_target = roundf(current_scroll / card_spacing) * card_spacing
+
+func _process_settle(delta: float) -> void:
+	var displacement: float = settle_target - current_scroll
+	velocity += (spring_k * displacement - spring_damping * velocity) * delta
+	current_scroll += velocity * delta
+
+	if absf(velocity) < rest_threshold and absf(displacement) < rest_threshold:
+		current_scroll = settle_target
+		velocity = 0.0
+		spinning = false
+		settling = false
+		_on_spin_finished()
+
+# ─── Card virtualisation ──────────────────────────────────────────────────────
+
+func _item_at(v_idx: int) -> CollectibleItem:
+	if not item_sequence.has(v_idx):
+		item_sequence[v_idx] = get_weighted_random_item()
+	return item_sequence[v_idx]
+
+func _update_cards() -> void:
+	if spawned_cards.is_empty():
+		return
+
+	var is_editor: bool = Engine.is_editor_hint()
+	var center_float: float = current_scroll / card_spacing
+	var passed_idx: int = floori(center_float + 0.01)
+
+	if not is_editor and passed_idx != last_passed_idx and passed_idx >= 0:
+		last_passed_idx = passed_idx
+		item_passed.emit(_item_at(passed_idx))
+
+	var start_idx: int = floori(center_float - pool_size / 2.0)
+	var pop_range: float = card_spacing * 1.5
+
+	for i: int in pool_size:
+		var v_idx: int = start_idx + i
+		var node_idx: int = posmod(v_idx, pool_size)
+		var card: carousel_item_3d = spawned_cards[node_idx]
+
+		if card.get_meta(\"v_idx\", -1) as int != v_idx:
+			card.set_meta(\"v_idx\", v_idx)
+			if v_idx >= 0:
+				card.show()
+				if not is_editor:
+					card.set_item(_item_at(v_idx))
+				card.rotation_degrees = Vector3.ZERO
+			else:
+				card.hide()
+
+		if card.visible:
+			var x: float = v_idx * card_spacing - current_scroll
+			var pop: float = smoothstep(pop_range, 0.0, absf(x))
+			card.position = Vector3(x, pop_height * pop, pop_z_offset * pop)
+
+# ─── Events ───────────────────────────────────────────────────────────────────
+
+func _on_flap_tick() -> void:
+	pass
+
+func _on_spin_finished() -> void:
+	var center_idx: int = roundi(current_scroll / card_spacing)
+	var winner: CollectibleItem = _item_at(center_idx)
+	spin_finished.emit(winner)
+
+	for card: carousel_item_3d in spawned_cards:
+		if card.get_meta(\"v_idx\", -1) as int == center_idx:
+			var tween: Tween = create_tween()
+			tween.tween_interval(1.0)
+			tween.tween_property(card, \"rotation_degrees:x\", -90.0, 0.4) \\
+				.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
+			tween.tween_callback(func() -> void: card_revealed.emit(winner))
+			break
+
+# ─── Weighted random ──────────────────────────────────────────────────────────
+
+func get_weighted_random_item() -> CollectibleItem:
+	var weights: Array[float] = GameManager.config.weights
+	var w_arr: Array[float] = []
+	var i_arr: Array[CollectibleItem] = []
+	for item: CollectibleItem in GameManager.items:
+		w_arr.append(weights[item.rarity - 1])
+		i_arr.append(item)
+	return i_arr[RandomNumberGenerator.new().rand_weighted(w_arr)]
+"
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tytky"]
+random_pitch = 1.005793
+random_volume_offset_db = 2.0
+streams_count = 1
+stream_0/stream = ExtResource("1_18lje")
+
+[node name="CarouselSpinner" type="Node3D" unique_id=558214486]
+script = SubResource("GDScript_omqsd")
+card_spacing = 0.3
+drag = null
+min_launch_speed = null
+max_launch_speed = null
+flapper_engage_speed = null
+flapper_impulse = null
+settle_speed = null
+spring_k = null
+spring_damping = null
+rest_threshold = null
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1433264011]
+stream = SubResource("AudioStreamRandomizer_tytky")
+volume_db = -20.0
+
+[connection signal="item_passed" from="." to="AudioStreamPlayer3D" method="play" unbinds=1]

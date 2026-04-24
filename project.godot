@@ -1,0 +1,59 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
+[application]
+
+config/name="Loot Get"
+run/main_scene="uid://rqw2nnmlabfp"
+config/features=PackedStringArray("4.6")
+config/icon="res://icon.svg"
+
+[autoload]
+
+GameManager="*uid://b7ui5qtwsr4k3"
+VerySimpleTwitch="*uid://bgbulblg7x6ef"
+
+[debug]
+
+gdscript/snap_controls_to_pixels=false
+
+[display]
+
+window/size/viewport_width=480
+window/size/viewport_height=480
+window/size/borderless=true
+window/size/transparent=true
+window/size/no_focus=true
+window/per_pixel_transparency/allowed=true
+
+[dotnet]
+
+project/assembly_name="Loot Get"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/font_auto_size_labels/plugin.cfg", "res://addons/gut/plugin.cfg", "res://addons/very-simple-twitch/plugin.cfg")
+
+[gui]
+
+common/snap_controls_to_pixels=false
+
+[rendering]
+
+anti_aliasing/quality/msaa_3d=1
+
+[very_simple_twitch]
+
+config/client_id="vdim2nho6r036mtr06mhtfz3oqu7rt"
+config/scopes=["chat:edit", "chat:read", "bits:read", "channel:read:subscriptions", "channel:read:redemptions", "channel:manage:redemptions", "channel:read:polls", "channel:read:predictions", "channel:read:hype_train", "channel:read:goals", "channel:read:charity", "channel:read:vips", "moderator:read:followers", "moderator:read:chatters", "whispers:read", "user:read:follows"]

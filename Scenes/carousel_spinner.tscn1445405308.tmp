@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://c5ie4dekjpmni"]
+
+[sub_resource type="GDScript" id="GDScript_omqsd"]
+script/source = "extends Node3D
+
+var weights_array: Array[float]
+
+func get_random_item():
+	for item in GameManager.items:
+		
+"
+
+[node name="CarouselSpinner" type="Node3D" unique_id=558214486]
+script = SubResource("GDScript_omqsd")

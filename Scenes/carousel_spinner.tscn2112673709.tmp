@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://c5ie4dekjpmni"]
+
+[sub_resource type="GDScript" id="GDScript_omqsd"]
+script/source = "extends Node3D
+
+
+
+func get_random_item():
+	var rarity_weights: Array[float] = GameManager.config.TwitchConfig.weights
+	var weights_array: Array[float]
+	for item in GameManager.items:
+		weights_array.append(rarity_weights[item.rarity])
+"
+
+[node name="CarouselSpinner" type="Node3D" unique_id=558214486]
+script = SubResource("GDScript_omqsd")

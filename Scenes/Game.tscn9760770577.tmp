@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://rqw2nnmlabfp"]
+
+[ext_resource type="PackedScene" uid="uid://olmourjkb3pw" path="res://Scenes/world.tscn" id="1_j5yw3"]
+[ext_resource type="Script" uid="uid://dcxmjrsbn20yw" path="res://Scripts/System/twitch_manager.gd" id="2_gl6un"]
+[ext_resource type="Script" uid="uid://qjdjasj245fg" path="res://Scripts/System/data_loader.gd" id="2_j5yw3"]
+[ext_resource type="Script" uid="uid://bhn3clcwj7nlq" path="res://Scenes/queue_manager.gd" id="4_kldst"]
+[ext_resource type="Shader" uid="uid://c1c08m157kyks" path="res://Scenes/iris.gdshader" id="5_b2bpf"]
+[ext_resource type="Script" uid="uid://vijqpad6pv7n" path="res://Scenes/ui_manager.gd" id="6_7lihs"]
+
+[sub_resource type="GDScript" id="GDScript_iukft"]
+script/source = "extends Node3D
+
+func _ready() -> void:
+	%DataManager.load_config()
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7lihs"]
+shader = ExtResource("5_b2bpf")
+shader_parameter/aperture = 0.50000002375
+shader_parameter/aspect_ratio = 1.0
+
+[node name="Game" type="Node3D" unique_id=105666280]
+script = SubResource("GDScript_iukft")
+
+[node name="Control" type="Control" parent="." unique_id=1837272771]
+material = SubResource("ShaderMaterial_7lihs")
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Control" unique_id=824921879]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_7lihs")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="Control/SubViewportContainer" unique_id=2109190775]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(480, 480)
+render_target_update_mode = 4
+
+[node name="World" parent="Control/SubViewportContainer/SubViewport" unique_id=381886228 instance=ExtResource("1_j5yw3")]
+unique_name_in_owner = true
+
+[node name="TwitchManager" type="Node" parent="Control/SubViewportContainer/SubViewport" unique_id=287795433]
+script = ExtResource("2_gl6un")
+metadata/_custom_type_script = "uid://dcxmjrsbn20yw"
+
+[node name="DataManager" type="Node" parent="Control/SubViewportContainer/SubViewport" unique_id=1033482206]
+unique_name_in_owner = true
+script = ExtResource("2_j5yw3")
+metadata/_custom_type_script = "uid://qjdjasj245fg"
+
+[node name="QueueManager" type="Node" parent="Control/SubViewportContainer/SubViewport" unique_id=1135448968]
+script = ExtResource("4_kldst")
+
+[node name="UIManager" type="Node" parent="Control/SubViewportContainer/SubViewport" unique_id=78064990]
+script = ExtResource("6_7lihs")
+
+[connection signal="command_activated" from="Control/SubViewportContainer/SubViewport/TwitchManager" to="Control/SubViewportContainer/SubViewport/QueueManager" method="_on_twitch_manager_command_activated"]
+[connection signal="data_loaded" from="Control/SubViewportContainer/SubViewport/DataManager" to="Control/SubViewportContainer/SubViewport/TwitchManager" method="_on_data_loader_data_loaded"]

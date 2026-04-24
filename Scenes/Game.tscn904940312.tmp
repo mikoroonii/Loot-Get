@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://rqw2nnmlabfp"]
+
+[ext_resource type="Script" uid="uid://dcxmjrsbn20yw" path="res://Scripts/System/twitch_manager.gd" id="2_gl6un"]
+[ext_resource type="Script" uid="uid://qjdjasj245fg" path="res://Scripts/System/data_loader.gd" id="2_j5yw3"]
+
+[sub_resource type="GDScript" id="GDScript_iukft"]
+script/source = "extends Node3D
+
+func _ready() -> void:
+	$DataLoader.load_config()
+	
+"
+
+[node name="Game" type="Node3D" unique_id=105666280]
+script = SubResource("GDScript_iukft")
+
+[node name="TwitchManager" type="Node" parent="." unique_id=287795433]
+script = ExtResource("2_gl6un")
+metadata/_custom_type_script = "uid://dcxmjrsbn20yw"
+
+[node name="DataLoader" type="Node" parent="." unique_id=1033482206]
+script = ExtResource("2_j5yw3")
+metadata/_custom_type_script = "uid://qjdjasj245fg"
+
+[connection signal="data_loaded" from="DataLoader" to="TwitchManager" method="_on_data_loader_data_loaded"]

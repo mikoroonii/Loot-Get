@@ -1,0 +1,157 @@
+[gd_scene format=3 uid="uid://bwbbgqtrem5an"]
+
+[ext_resource type="Script" uid="uid://eal55jhn4pjf" path="res://Scenes/case_revealer.gd" id="1_bdnq0"]
+[ext_resource type="PackedScene" uid="uid://t5jrqk28gitp" path="res://Assets/Rigged Models/crate.glb" id="2_ul3yt"]
+[ext_resource type="AudioStream" uid="uid://ddpm7vutiywn8" path="res://Assets/sfx/crateopen.wav" id="3_wckxx"]
+[ext_resource type="Script" uid="uid://cfnyjlxw8avox" path="res://Scripts/infinite_spin.gd" id="4_yxldi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_wckxx"]
+
+[sub_resource type="Animation" id="Animation_yxldi"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0.15122527, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0uil3"]
+resource_name = "item_appear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Node3D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.2773921, 1),
+"update": 0,
+"values": [Vector3(0, 0.15122527, 0), Vector3(0, 0.956, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Node3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.20306318, 1),
+"update": 0,
+"values": [Vector3(0, 0, -0.6457718), Vector3(0, 6.2831855, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Node3D:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(0.43527526, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_jvbrs"]
+_data = {
+&"RESET": SubResource("Animation_yxldi"),
+&"item_appear": SubResource("Animation_0uil3")
+}
+
+[sub_resource type="Curve" id="Curve_yxldi"]
+_data = [Vector2(0, 0), 0.0, 2.7685237, 0, 0, Vector2(0.6244857, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), -7.2669125, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_0uil3"]
+curve = SubResource("Curve_yxldi")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jvbrs"]
+emission_shape = 3
+emission_box_extents = Vector3(0.29, 0.05, 0.25)
+gravity = Vector3(0, 0.5, 0)
+radial_accel_min = -2.2351742e-06
+radial_accel_max = 0.09999776
+tangential_accel_min = -2.2351742e-06
+tangential_accel_max = 0.09999776
+damping_min = 0.1
+damping_max = 0.2
+scale_min = 0.5
+scale_curve = SubResource("CurveTexture_0uil3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bv0og"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 6.0
+
+[sub_resource type="SphereMesh" id="SphereMesh_achvs"]
+material = SubResource("StandardMaterial3D_bv0og")
+radius = 0.01
+height = 0.02
+
+[node name="Revealer" type="Node3D" unique_id=2086138151]
+script = ExtResource("1_bdnq0")
+
+[node name="crate" parent="." unique_id=1602878029 instance=ExtResource("2_ul3yt")]
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1492392353]
+stream = ExtResource("3_wckxx")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=229173556]
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.15122527, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D" unique_id=2050240481]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+mesh = SubResource("BoxMesh_wckxx")
+script = ExtResource("4_yxldi")
+spin = Vector3(0, 2, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1209157831]
+libraries/ = SubResource("AnimationLibrary_jvbrs")
+
+[node name="CPUParticles3D" type="GPUParticles3D" parent="." unique_id=1071339989]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18356085, -0.047339767)
+emitting = false
+amount = 120
+lifetime = 4.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_jvbrs")
+draw_pass_1 = SubResource("SphereMesh_achvs")
+
+[node name="GPUParticlesAttractorSphere3D" type="GPUParticlesAttractorSphere3D" parent="CPUParticles3D" unique_id=1268572004]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4672479, 0.0134657025)
+strength = -1.0
+attenuation = 0.68302
+radius = 0.45479277
