@@ -93,6 +93,7 @@ func load_items():
 				item_resource.mesh = ObjParse.from_path(data_dir + "/" + i + "/" + f + "/" + f + ".obj", data_dir + "/" + i + "/" + f + "/" + f + ".mtl")
 				item_resource.value_min = jsonDict[0].valuemin
 				item_resource.value_max = jsonDict[0].valuemax
+				item_resource.tags.assign(jsonDict[0].tags)
 				GameManager.items.append(item_resource)
 
 class InventoryItem extends RefCounted:

@@ -48,7 +48,10 @@ icon = ExtResource("1_ppqpt")
 metadata/_custom_type_script = "uid://bwcsst1iqiqu1"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2sr87"]
-bg_color = Color(0.1728327, 0.17283267, 0.17283267, 1)
+bg_color = Color(0.8646751, 0.86467516, 0.8646751, 1)
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.0885599, 0.08855995, 0.088559814, 1)
 corner_radius_top_left = 60
 corner_radius_top_right = 60
 corner_radius_bottom_right = 60
@@ -73,6 +76,7 @@ offset_bottom = 1536.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_2sr87")
 
 [node name="ColorRect" type="ColorRect" parent="Panel" unique_id=1557988103]
+modulate = Color(1, 1, 1, 0.62352943)
 layout_mode = 1
 offset_top = -125.0
 offset_right = 120.0
@@ -101,6 +105,7 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 322.0
 grow_horizontal = 2
+theme_override_colors/default_color = Color(0.31431612, 0.31431612, 0.3143161, 1)
 theme_override_font_sizes/normal_font_size = 90
 theme_override_font_sizes/bold_font_size = 90
 theme_override_font_sizes/bold_italics_font_size = 90
@@ -124,6 +129,7 @@ offset_top = -311.0
 offset_bottom = -1.0
 grow_horizontal = 2
 grow_vertical = 0
+theme_override_colors/default_color = Color(0.31431612, 0.31431612, 0.3143161, 1)
 theme_override_font_sizes/normal_font_size = 60
 theme_override_font_sizes/bold_font_size = 60
 theme_override_font_sizes/bold_italics_font_size = 60

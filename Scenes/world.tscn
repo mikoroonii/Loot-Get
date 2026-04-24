@@ -169,11 +169,11 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08211964, 0)
 fov = 90.0
 
 [node name="CarouselSpinner" parent="." unique_id=558214486 instance=ExtResource("2_8j60k")]
-transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -4.7683716e-07, -0.458153, -1.2259638)
+transform = Transform3D(1, 0, 0, 0, 0.99999994, 0, 0, 0, 0.99999994, -4.7683716e-07, -0.56128365, -0.94097024)
 card_spacing = 0.7
-pop_height = 0.15
-pop_z_offset = 0.5
-drag = 0.8
+pop_height = 0.3
+pop_z_offset = 0.29
+drag = 0.1
 min_launch_speed = 25.0
 max_launch_speed = 35.0
 flapper_engage_speed = 8.0

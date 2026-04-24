@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dcxmjrsbn20yw" path="res://Scripts/System/twitch_manager.gd" id="2_gl6un"]
 [ext_resource type="Script" uid="uid://qjdjasj245fg" path="res://Scripts/System/data_loader.gd" id="2_j5yw3"]
 [ext_resource type="Script" uid="uid://bhn3clcwj7nlq" path="res://Scripts/System/queue_manager.gd" id="4_kldst"]
-[ext_resource type="Shader" uid="uid://c1c08m157kyks" path="res://Scenes/iris.gdshader" id="5_b2bpf"]
+[ext_resource type="Shader" uid="uid://c1c08m157kyks" path="res://Assets/materials/iris.gdshader" id="5_b2bpf"]
 [ext_resource type="Script" uid="uid://vijqpad6pv7n" path="res://Scripts/System/ui_manager.gd" id="6_7lihs"]
 [ext_resource type="Script" uid="uid://bttgnk3bb2a8i" path="res://addons/font_auto_size_labels/auto_size_label.gd" id="7_fgofq"]
 

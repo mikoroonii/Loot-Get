@@ -199,13 +199,14 @@ func _on_spin_finished() -> void:
 # ─── Weighted random ──────────────────────────────────────────────────────────
 
 func get_weighted_random_item() -> CollectibleItem:
-	var weights: Array[float] = GameManager.config.weights
-	var w_arr: Array[float] = []
-	var i_arr: Array[CollectibleItem] = []
-	for item: CollectibleItem in GameManager.items:
-		w_arr.append(weights[item.rarity - 1])
-		i_arr.append(item)
-	return i_arr[RandomNumberGenerator.new().rand_weighted(w_arr)]
+	return GameManager.items[1]
+	#var weights: Array[float] = GameManager.config.weights
+	#var w_arr: Array[float] = []
+	#var i_arr: Array[CollectibleItem] = []
+	#for item: CollectibleItem in GameManager.items:
+		#w_arr.append(weights[item.rarity - 1])
+		#i_arr.append(item)
+	#return i_arr[RandomNumberGenerator.new().rand_weighted(w_arr)]
 "
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_tytky"]
@@ -217,15 +218,6 @@ stream_0/stream = ExtResource("1_18lje")
 [node name="CarouselSpinner" type="Node3D" unique_id=558214486]
 script = SubResource("GDScript_omqsd")
 card_spacing = 0.3
-drag = null
-min_launch_speed = null
-max_launch_speed = null
-flapper_engage_speed = null
-flapper_impulse = null
-settle_speed = null
-spring_k = null
-spring_damping = null
-rest_threshold = null
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="." unique_id=1433264011]
 stream = SubResource("AudioStreamRandomizer_tytky")
